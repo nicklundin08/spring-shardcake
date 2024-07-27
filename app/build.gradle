@@ -1,0 +1,47 @@
+plugins {
+    id 'scala'
+    id 'application'
+    id 'com.github.maiflai.scalatest' version '0.32'
+    id 'com.dorongold.task-tree' version '2.1.1'
+    id "org.springframework.boot" version "3.3.2"
+    id "io.spring.dependency-management" version "1.1.6"
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.scala-lang:scala3-library_3:3.5.1-RC1'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.3.2'
+    
+    implementation 'com.devsisters:shardcake-core_3:2.3.2'
+    implementation 'com.devsisters:shardcake-entities_3:2.3.2'
+    implementation 'com.devsisters:shardcake-protocol-grpc_3:2.3.2'
+    implementation 'com.devsisters:shardcake-manager_3:2.3.2'
+
+    // implementation 'com.devsisters:shardcake-health-k8s_3:2.3.2'
+    // implementation 'com.devsisters:shardcake-storage-redis_3:2.3.2'
+
+
+    testImplementation 'org.scalatest:scalatest_3:3.2.19'
+    testImplementation 'org.pegdown:pegdown:1.4.2'
+    testImplementation 'com.vladsch.flexmark:flexmark-all:0.64.8'
+}
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'org.example.App'
+}
+
+springBoot {
+    mainClassName = 'org.example.App'
+}

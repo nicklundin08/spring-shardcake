@@ -35,7 +35,6 @@ class ZioController:
 
 
 object ZioController {
-  val logger = LoggerFactory.getLogger("ShardCake");
+  val logger = LoggerFactory.getLogger("ZioController");
   val responseMap:  Map[String, Any] = Map("name" -> "Some app name", "message" -> "It works on my machine!")
-
 }

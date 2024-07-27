@@ -18,7 +18,6 @@ object Guild extends EntityType[GuildMessage]("guild"){
     val logger = LoggerFactory.getLogger("Guild")
     val runtime = Runtime.default
 
-
     def behavior(entityId: String, messages: Queue[GuildMessage]): RIO[Sharding, Nothing] =
         Ref
             .make(Set.empty[String])
@@ -41,11 +40,8 @@ object Guild extends EntityType[GuildMessage]("guild"){
         }
 
 
-    val programEffect =
-        for {
-        _    <- ZIO.attempt(logger.info("Trace message from inside effect"))
-        _     <- Sharding.registerEntity(Guild, Guild.behavior)
-        _     <- Sharding.registerScoped
+    val programEffect = for {
+        _     <- ZIO.attempt(logger.info("Trace message from inside effect"))
         guild <- Sharding.messenger(Guild)
         _     <- guild.send("guild1")(GuildMessage.Join("user1", _)).debug
         _     <- guild.send("guild1")(GuildMessage.Join("user2", _)).debug
@@ -64,9 +60,9 @@ object Guild extends EntityType[GuildMessage]("guild"){
         com.devsisters.shardcake.interfaces.Storage.memory,                  // store data in memory
         ShardManagerClient.liveWithSttp, // client to communicate with the Shard Manager
         GrpcPods.live,                   // use gRPC protocol
-        GrpcShardingService.live,        // expose gRPC service
+        // GrpcShardingService.live,        // expose gRPC service
         Sharding.live                    // sharding logic
-        )
+    )
     
     def runProgramUnsafe: Unit = {
         logger.info("Trace message 2");
